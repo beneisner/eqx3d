@@ -1,4 +1,4 @@
-site_name: python_pkg_template
+site_name: eqx3d
 theme:
   name: material
 plugins:

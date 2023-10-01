@@ -1,5 +1,5 @@
 [project]
-name = "python-pkg-template"
+name = "eqx3d"
 version = "0.1.0"
 description = "A Python Package Template"
 readme = "README.md"
@@ -41,7 +41,7 @@ build_docs = [
 where = ["src"]
 
 [tool.setuptools.package-data]
-python_pkg_template = ["py.typed"]
+eqx3d = ["py.typed"]
 
 [tool.isort]
 profile = "black"

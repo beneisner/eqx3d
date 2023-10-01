@@ -1,21 +1,15 @@
 [project]
 name = "eqx3d"
 version = "0.1.0"
-description = "A Python Package Template"
+description = "JAX+Equinox implementation of 3D neural networks."
 readme = "README.md"
 requires-python = ">=3.6"
-license = {file = "LICENSE.txt"}
-authors = [
-  {email = "baeisner@andrew.cmu.edu", name = "Ben Eisner"}
-]
-dependencies = []
+license = { file = "LICENSE.txt" }
+authors = [{ email = "ben.a.eisner@gmail.com", name = "Ben Eisner" }]
+dependencies = ["equinox", "jax"]
 
 [build-system]
-requires = [
-  "setuptools >= 62.3.2",
-  "setuptools-scm",
-  "wheel",
-]
+requires = ["setuptools >= 62.3.2", "setuptools-scm", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.optional-dependencies]
@@ -28,13 +22,9 @@ develop = [
   "pytest == 7.3.2",
   "pre-commit == 3.3.3",
 ]
-notebooks = [
-  "jupyter",
-]
-build_docs = [
-  "mkdocs-material",
-  "mkdocstrings[python]",
-]
+notebooks = ["jupyter"]
+build_docs = ["mkdocs-material", "mkdocstrings[python]"]
+examples = ["optax", "torch", "torch_geometric", "tqdm"]
 
 # This is required to allow us to have notebooks/ at the top level.
 [tool.setuptools.packages.find]
@@ -54,8 +44,7 @@ mypy_path = "src"
 namespace_packages = true
 explicit_package_bases = true
 
-# # Uncomment this when you have imports for mypy to ignore.
-# [[tool.mypy.overrides]]
-# module = [
-# ]
-# ignore_missing_imports = true
+# Uncomment this when you have imports for mypy to ignore.
+[[tool.mypy.overrides]]
+module = ["equinox.*"]
+ignore_missing_imports = true

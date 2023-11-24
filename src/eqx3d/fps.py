@@ -11,6 +11,9 @@ def fps(points: jxt.ArrayLike, n_samples: int, key: jax.random.PRNGKey) -> jax.A
 
     Reimplemented in JAX, see https://github.com/yanx27/Pointnet_Pointnet2_pytorch/blob/master/models/pointnet2_utils.py#L63C23-L63C23
 
+    # It might be possible to use jax.lax.scan instead of a for loop to speed up
+    # compilation. See https://jax.readthedocs.io/en/latest/notebooks/Common_Gotchas_in_JAX.html#using-python-control-flow
+
     Args:
         points (jxt.ArrayLike): Points to be sampled.
         n_samples (int): Number of unique samples.

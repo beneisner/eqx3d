@@ -124,7 +124,14 @@ def main():
 
         return accuracy
 
-    def train(model, loader, opt: optax.GradientTransformation, key, epochs=100):
+    def train(
+        model,
+        train_loader,
+        val_loader,
+        opt: optax.GradientTransformation,
+        key,
+        epochs=100,
+    ):
         # Initialize a state for the model.
         state = eqx.nn.State(model)
 
@@ -148,14 +155,14 @@ def main():
             return model, state, opt_state, loss
 
         # Run a single initial eval
-        accuracy = evaluate(model, state, loader, key)
+        accuracy = evaluate(model, state, train_loader, key)
         print(f"Initial accuracy: {accuracy}")
 
         # Iterate over the data.
         for epoch in range(epochs):
             loss = 0.0
             n_batches = 0
-            for batch in tqdm.tqdm(loader):
+            for batch in tqdm.tqdm(train_loader):
                 _, key = jax.random.split(key)
                 model, state, opt_state, loss = train_step(
                     model, state, opt_state, batch, key
@@ -170,13 +177,13 @@ def main():
 
             if epoch % 5 == 0:
                 # Evaluate the model.
-                eval_accuracy = evaluate(model, state, loader, key)
-                print(f"Epoch {epoch}, accuracy: {eval_accuracy}")
+                eval_accuracy = evaluate(model, state, val_loader, key)
+                print(f"Epoch {epoch}, val accuracy: {eval_accuracy}")
 
         return model, state
 
     trained_model, trained_state = train(
-        init_model, train_loader, opt, jax.random.PRNGKey(0), epochs=1000
+        init_model, train_loader, val_loader, opt, jax.random.PRNGKey(0), epochs=1000
     )
 
     # loss = loss_fn(model, state, batch, keys)
